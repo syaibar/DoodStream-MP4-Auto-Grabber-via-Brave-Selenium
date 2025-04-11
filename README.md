@@ -33,11 +33,11 @@ Berisi direct link .mp4 dari semua video yang berhasil diproses
 ## 📦 Instalasi & Requirements
 
 ```bash
-# ✅ Clone repository dari GitHub
+ ✅ Clone repository dari GitHub
 git clone https://github.com/syaibar/DoodStream-MP4-Auto-Grabber-via-Brave-Selenium.git
 cd DoodStream-MP4-Auto-Grabber-via-Brave-Selenium
 
-# ✅ Install dependensi Python
+ ✅ Install dependensi Python
 pip install requests selenium
 ```
 
