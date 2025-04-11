@@ -121,4 +121,3 @@ Semua proses dilakukan lokal di komputer pribadi kamu.
 ☕ Bantu support developer-nya
 📨 DM untuk request fitur tambahan
 ```
-```
