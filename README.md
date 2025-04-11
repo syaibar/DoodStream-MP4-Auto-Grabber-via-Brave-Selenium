@@ -38,7 +38,7 @@ git clone https://github.com/syaibar/DoodStream-MP4-Auto-Grabber-via-Brave-Selen
 cd DoodStream-MP4-Auto-Grabber-via-Brave-Selenium
 
 # ✅ Install dependensi Python
-pip install -r requirements.txt
+pip install requests selenium
 ```
 
 ---
