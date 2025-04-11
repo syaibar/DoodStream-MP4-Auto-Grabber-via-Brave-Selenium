@@ -48,7 +48,7 @@ https://brave.com
 C:\Users\NAMA_KAMU\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe
 
 🛠️ Contoh setting di script Python:
-BRAVE_PATH = r"C:\Users\UsernameKamu\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe"
+BRAVE_PATH = r"C:\Users\NAMA_KAMU\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe"
 
 💡 Jika lokasi Brave kamu berbeda, ganti BRAVE_PATH sesuai letak brave.exe di PC kamu.
 ```
