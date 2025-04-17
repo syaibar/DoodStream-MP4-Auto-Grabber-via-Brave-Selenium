@@ -2,6 +2,7 @@ import os
 import re
 import sys
 import time
+import logging
 import requests
 import tempfile
 import subprocess
@@ -11,25 +12,34 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.remote.remote_connection import LOGGER
 
+# Bungkam log selenium
+LOGGER.setLevel(logging.WARNING)
+
+# Jalur Brave
 BRAVE_PATH = r"C:\Users\syaibarstudio\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe"
+
+# File output
 HTML_SOURCE_FILE = "hasil.txt"
 OUTPUT_MP4_FILE = "hasil_mp4_link.txt"
 
-# Bungkam semua log error Python
+# Bungkam error Python
 sys.stderr = open(os.devnull, "w")
 
-# Step 1: Extract link dari halaman input user
 def extract_video_links(html_text):
     links = re.findall(r'https://do7go\.com/d/[a-zA-Z0-9]+', html_text)
     return list(set(links))
 
-# Step 2: Jalankan Brave & Ambil direct MP4
 def start_chrome_driver(options):
-    tmp_log = tempfile.TemporaryFile()
+    tmp_log = open(os.devnull, "w")  # Bungkam output log
+
     service = Service()
     service.creationflags = subprocess.CREATE_NO_WINDOW
     service.log_output = tmp_log
+    service.stdout = tmp_log
+    service.stderr = tmp_log
+
     driver = webdriver.Chrome(service=service, options=options)
     return driver
 
@@ -75,7 +85,11 @@ def process_page(url):
     options.binary_location = BRAVE_PATH
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
-    options.add_argument("--start-maximized")
+    options.add_argument("--window-size=1280,720")
+    options.add_argument("--window-position=9999,9999")
+    options.add_argument("--headless=new")
+    options.add_argument("--mute-audio")
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
     try:
         driver = start_chrome_driver(options)
@@ -103,9 +117,8 @@ def process_page(url):
             pass
 
 def main():
-    print("=== DoodStream Scraper + Grabber MP4 via Brave ===\n")
+    print("=== DoodStream Scraper + Grabber MP4 via Brave (Silent & Background Mode) ===\n")
 
-    # Step 1: Minta input user
     input_url = input("🔗 Masukkan link playlist / video dari do7go.com: ").strip()
 
     if not input_url.startswith("https://"):
@@ -124,7 +137,6 @@ def main():
             print("⚠️ Tidak ada link ditemukan.")
             return
 
-        # Simpan semua link ke hasil.txt
         with open(HTML_SOURCE_FILE, "w", encoding='utf-8') as out:
             for link in video_links:
                 out.write(link + "\n")
@@ -135,7 +147,6 @@ def main():
         print(f"❌ Terjadi error saat ambil HTML: {e}")
         return
 
-    # Step 2: Proses ambil direct MP4
     with open(HTML_SOURCE_FILE, "r", encoding="utf-8") as f:
         urls = [line.strip() for line in f if line.strip().startswith("https://")]
 
